@@ -33,6 +33,26 @@ cd Article-Management-API
 6. To Close docker compose just run following:
     1. `docker compose stop && docker compose rm -f`
     2. `sh close.sh`
+
+## User
+Also can goto `/admin/` to edit model by default `Superuser`.
+Can disable default `Superuser` by annotate line 3 in `init.sh` : `echo "from django.contrib.auth import get_user_ ...`
+
+```
+{
+    "username":"admin",
+    "password":"admin"
+}
+```
+
+default `Normal User` create by default data in `fixtures.json`:
+```
+{
+    "username":"hello",
+    "password":"notcommonpassword"
+}
+```
+
 ## Set JWT
 
 Headers : 
