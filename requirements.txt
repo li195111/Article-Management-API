@@ -1,0 +1,16 @@
+django==3.2
+psycopg2
+dj_database_url
+whitenoise
+
+djangorestframework
+djangorestframework-simplejwt
+markdown==3.3.4
+django-filter
+djoser
+
+# for custom jwt
+jwcrypto
+
+# for ImageField
+Pillow
