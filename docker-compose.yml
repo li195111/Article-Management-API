@@ -1,0 +1,58 @@
+version: "1"
+
+services:
+  web:
+    # the application's web service (container) will use an image based on our Dockerfile
+    build: .
+    # map the internal port 80 to port 8000 on the host
+    ports:
+      - "8000:8000"
+    # map the host directory to app (which allows us to see and edit files inside the container)
+    volumes:
+      - ".:/app:rw"
+      - "./data:/data:rw"
+    # the default command to run whenever the container is launched
+    command: sh init.sh #python manage.py runserver 0.0.0.0:80
+    # the URL 'postgres' or 'mysql' will point to the application's db service
+    networks:
+      - djangocmsnet
+
+    env_file: .env
+    depends_on:
+      database_default:
+        condition: service_healthy
+
+  database_default:
+    container_name: pg_container
+    # Select one of the following db configurations for the database
+    image: postgres:14.2
+    ports:
+      - "5432:5432/tcp"  # allow your local dev env to connect to the db
+    env_file: .env
+    networks:
+      - djangocmsnet
+
+    volumes:
+      - ".:/app:rw"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "5050:5050"
+    networks:
+      - djangocmsnet
+    env_file: .env
+    depends_on:
+      database_default:
+        condition: service_healthy
+
+networks:
+  djangocmsnet:

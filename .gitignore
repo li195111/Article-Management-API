@@ -1,12 +1,4 @@
-/.DS_Store
-/.env
-/.env-sample
-/Dockerfile
-/article_manage
-/article_restapi
-/data
-/docker-compose.yml
-/fixtures.json
-/init.sh
-/manage.py
-/registry_user.sh
+__pycache__*
+*.DS_Store
+*_initial.py
+.env

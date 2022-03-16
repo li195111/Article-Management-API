@@ -1,14 +1,39 @@
-# Article Management REST API
+# Article Management REST API - Big Data Interview
+
 Django REST framework with JWT Authentication
 
 ## Requirements
 - Docker
 
+## Include
+- Python 3.7
+- Django 3.2 - `localhost:8000`
+- Django-SimpleJWT
+    - JWT Experid Time: default: `300 seconds ( 5 minutes )`
+    - Refresh Experid Time: default: `7 days`.
+    - Can setting at `article_restapi/settings.py`
+- PostgreSQL 14.2 - `localhost:5432`
+- pgAdmin4 - `localhost:5050`
 ## How To Start
 
-1. replace `.env-sample` to `.env`
+1. Clone Repositry & `cd` to folder.
+```
+git clone https://github.com/li195111/Article-Management-API.git
+cd Article-Management-API
+```
+2. rename `.env-sample` to `.env`
 
-### Set JWT
+3. You have two options to start docker compose:
+    1. `docker compose up` and wait a second to launch.
+    2. `sh run.sh`
+4. And after that will do following:
+    1. If choice ( i ) in step 3, then open http://localhost:8000 and do the following APIs methods.
+    2. else choice ( ii ), It will open browswe automatically. Just wait.
+5. Then You can do whatever you want to test APIs.
+6. To Close docker compose just run following:
+    1. `docker compose stop && docker compose rm -f`
+    2. `sh close.sh`
+## Set JWT
 
 Headers : 
 ```
@@ -16,7 +41,26 @@ Headers :
     "Authorization": "JWT <received JWT>"
 }
 ```
-### APIs Path, body and return
+## APIs Path, body and return
+
+|Method|Path|Descriptions|
+|-|-|-|
+|POST|`/auth/users/`| Create `註冊(創建)` 使用者
+|DELETE|`/auth/users/{user_id}`| Delete `刪除` 使用者
+|POST|`/auth/jwt/create`| Login 登入 `取得` JWT
+|POST|`/auth/jwt/refresh`| Refresh `更新` JWT
+|POST|`/auth/jwt/verify`| Verify `驗證` JWT
+|GET|`/api/article/authors/`| `取得所有` 作者
+|GET|`/api/article/authors/{author_id}`| `取得` 作者
+|POST|`/api/article/authors/`| `新增` 作者
+|GET|`/api/article/articles/`| `取得所有` 文章
+|GET|`/api/article/articles/{article_id}/`| `取得` 文章
+|POST|`/api/article/articles/`| `新增` 文章
+|PATCH|`/api/article/articles/{article_id}/`| `修改` 文章
+|PUSH|`/api/article/articles/{article_id}/`| `置換` 文章
+|DELETE|`/api/article/articles/{article_id}/`| `刪除` 文章
+
+### Details
 
 <details>
 <summary><strong>POST Regeistry 註冊使用者</strong></summary>
@@ -194,7 +238,7 @@ Path: `/api/article/articles/`
 <details>
 <summary><strong>GET 取得 文章</strong></summary>
 
-Path: `/api/article/articles/`
+Path: `/api/article/articles/{article_id}`
 
 - return:
     ```
@@ -295,6 +339,6 @@ Path: `/api/article/articles/{article_id}/`
 <details>
 <summary><strong>DELETE 刪除 文章</strong></summary>
 
-Path: `/api/article/articles/1/`
+Path: `/api/article/articles/{article_id}/`
 
 </details>
